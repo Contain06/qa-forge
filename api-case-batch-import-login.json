@@ -1,0 +1,71 @@
+[
+  {
+    "caseName": "大事件登录-成功-admin",
+    "caseLevel": "P0",
+    "requestHeaders": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "requestParams": {},
+    "requestBody": {
+      "username": "admin",
+      "password": "123456"
+    },
+    "expectedResult": {
+      "httpStatus": 200,
+      "message": "登录成功",
+      "responseShouldContain": ["token"]
+    },
+    "description": "正确账号密码登录，应返回成功并包含 token。"
+  },
+  {
+    "caseName": "大事件登录-密码错误",
+    "caseLevel": "P1",
+    "requestHeaders": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "requestParams": {},
+    "requestBody": {
+      "username": "admin",
+      "password": "wrong_password"
+    },
+    "expectedResult": {
+      "httpStatus": 200,
+      "message": "密码错误或登录失败"
+    },
+    "description": "错误密码登录，用于验证业务错误返回。注意：如果不配置断言，平台只会按 HTTP 2xx 判断通过。"
+  },
+  {
+    "caseName": "大事件登录-用户名为空",
+    "caseLevel": "P1",
+    "requestHeaders": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "requestParams": {},
+    "requestBody": {
+      "username": "",
+      "password": "123456"
+    },
+    "expectedResult": {
+      "httpStatus": 200,
+      "message": "用户名不能为空或参数校验失败"
+    },
+    "description": "用户名为空的异常场景。注意：需要额外配置断言才能按业务 code/message 判定失败。"
+  },
+  {
+    "caseName": "大事件登录-密码为空",
+    "caseLevel": "P1",
+    "requestHeaders": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "requestParams": {},
+    "requestBody": {
+      "username": "admin",
+      "password": ""
+    },
+    "expectedResult": {
+      "httpStatus": 200,
+      "message": "密码不能为空或参数校验失败"
+    },
+    "description": "密码为空的异常场景。注意：需要额外配置断言才能按业务 code/message 判定失败。"
+  }
+]

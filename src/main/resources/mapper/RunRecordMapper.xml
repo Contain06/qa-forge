@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atcontain.qaforge.mapper.RunRecordMapper">
+    <select id="listData" resultType="com.atcontain.qaforge.vo.RunRecordDataVO">
+        select
+        count(id) as totalCount,
+        sum(success_count) as successCount,
+        sum(fail_count) as failCount,
+        sum(error_count + timeout_count) as errorCount,
+        CASE WHEN SUM(total_count) = 0 THEN 0 ELSE (SUM(success_count) / SUM(total_count)) * 100 END AS passRate,
+        CASE WHEN SUM(total_count) = 0 THEN 0 ELSE ROUND(SUM(total_time) / SUM(total_count)) END AS totalTime
+        from run_record
+        <where>
+            project_id = #{projectId}
+            <if test="runType != null and runType != ''">
+                and run_type = #{runType}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>
